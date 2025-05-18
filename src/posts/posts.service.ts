@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { ICreatePostDto } from './dto/create-post.dto';
-import { IUpdatePostDto } from './dto/update-post.dto';
+import { Body, Injectable } from '@nestjs/common';
 import { IPostDto } from './dto/post.dto';
+import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
 
 @Injectable()
 export class PostsService {
@@ -23,7 +23,7 @@ export class PostsService {
     },
   ];
 
-  async create(createPostDto: ICreatePostDto) {
+  async create(@Body() createPostDto: CreatePostDto) {
     const newPost = { id: this.posts.length + 1, ...createPostDto };
     this.posts.push(newPost);
     return 'This action adds a new post ' + JSON.stringify(createPostDto);
@@ -41,7 +41,7 @@ export class PostsService {
     return `This action returns a #${id} post`;
   }
 
-  async update(id: number, updatePostDto: IUpdatePostDto) {
+  async update(id: number, @Body() updatePostDto: UpdatePostDto) {
     const postIndex = this.posts.findIndex((post) => post.id === id);
     if (postIndex === -1) {
       return `Post with id ${id} not found`;

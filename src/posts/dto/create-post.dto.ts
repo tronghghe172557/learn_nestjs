@@ -1,8 +1,14 @@
-import { z } from 'zod';
+import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
+export class CreatePostDto {
+  @IsNotEmpty({ message: 'Title is required' })
+  @IsString({ message: 'Title must be a string' })
+  @MinLength(1, { message: 'Title must be at least 1 character long' })
+  @MaxLength(255, { message: 'Title must be at most 255 characters long' })
+  title: string;
 
-export const createPostSchema = z.object({
-  title: z.string().min(1, 'Title is required'),
-  content: z.string().min(1, 'Content is required'),
-});
-
-export type ICreatePostDto = z.infer<typeof createPostSchema>;
+  @IsNotEmpty({ message: 'content is required' })
+  @IsString({ message: 'content must be a string' })
+  @MinLength(1, { message: 'content must be at least 1 character long' })
+  @MaxLength(255, { message: 'content must be at most 255 characters long' })
+  content: string;
+}

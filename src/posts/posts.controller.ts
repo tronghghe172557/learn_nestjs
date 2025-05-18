@@ -10,8 +10,8 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
-import { ICreatePostDto } from './dto/create-post.dto';
-import { IUpdatePostDto } from './dto/update-post.dto';
+import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
 
 // những thằng sau @ là decorator
 @Controller('posts')
@@ -20,7 +20,10 @@ export class PostsController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async create(@Body() createPostDto: ICreatePostDto) {
+  async create(
+    @Body()
+    createPostDto: CreatePostDto,
+  ) {
     // @Body() nhận dữ liệu từ body của request
     return await this.postsService.create(createPostDto);
   }
@@ -39,7 +42,7 @@ export class PostsController {
 
   @Patch(':id')
   @HttpCode(HttpStatus.OK)
-  async update(@Param('id') id: string, @Body() updatePostDto: IUpdatePostDto) {
+  async update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
     return this.postsService.update(+id, updatePostDto);
   }
 
