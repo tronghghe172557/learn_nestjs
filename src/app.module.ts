@@ -6,6 +6,8 @@ import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { PostsModule } from './posts/posts.module';
 import { DatabaseModule } from './base/database/database.module';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ResponseTransformInterceptor } from './base/interceptors';
 
 @Module({
   imports: [
@@ -17,6 +19,12 @@ import { DatabaseModule } from './base/database/database.module';
     DatabaseModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ResponseTransformInterceptor,
+    },
+  ],
 })
 export class AppModule {}

@@ -2,6 +2,7 @@ import { Global, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { configs } from '@/base/configs';
+import { RedisService } from './services/redis.service';
 
 @Global()
 @Module({
@@ -13,7 +14,7 @@ import { configs } from '@/base/configs';
       serverSelectionTimeoutMS: 10000, // is the time to wait for a server to be selected
     }),
   ],
-  providers: [],
-  exports: [],
+  providers: [RedisService],
+  exports: [RedisService],
 })
 export class DatabaseModule {}

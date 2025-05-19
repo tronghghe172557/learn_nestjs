@@ -5,6 +5,7 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  // @UseInterceptors(CachingInterceptor)
   @Get()
   getAllUsers() {
     return this.userService.getAllUsers();
