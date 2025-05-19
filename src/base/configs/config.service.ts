@@ -1,4 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { config } from 'dotenv';
+
+config({
+  path: ['.env.local', '.env'],
+});
 
 @Injectable()
 export class ConfigService {
@@ -6,11 +11,11 @@ export class ConfigService {
   APP_PORT = parseInt(process.env['APP_PORT'] ?? '3000');
   USE_HTTPS = process.env['USE_HTTPS'] === 'true';
 
-  ACCESS_SECRET_KEY = process.env['ACCESS_SECRET_KEY'];
-  REFRESH_SECRET_KEY = process.env['REFRESH_SECRET_KEY'];
+  ACCESS_SECRET_KEY = process.env['ACCESS_SECRET_KEY'] ?? 'access_secret_key';
+  REFRESH_SECRET_KEY = process.env['REFRESH_SECRET_KEY'] ?? 'refresh_secret_key';
 
-  DB_HOST = process.env['DB_HOST'];
-  DB_PORT = process.env['DB_PORT'];
+  DB_HOST = process.env['DB_HOST'] ?? 'localhost';
+  DB_PORT = process.env['DB_PORT'] ?? '27017';
   DB_DATABASE_NAME = process.env['DB_DATABASE_NAME'];
 
   MONGO_URI = `mongodb://${this.DB_HOST}:${this.DB_PORT}/${this.DB_DATABASE_NAME}`;
